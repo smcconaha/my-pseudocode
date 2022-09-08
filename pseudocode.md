@@ -4,7 +4,7 @@
 < As a coffee drinker, I want to make a cup of coffee.
 ------------------------------------------------
 ### Initial Draft:
-I *get* the aeropress(plunger, brew chamber, and filter cap), one aeropress filter, one coffee cup, one liquid measureing cup (one cup *minimum*), electric kettle with temperature control, kitchen scale, coffee (16 grams ground), and two cups of water (*minimum* for kettle), and one teaspoon, one timer.
+I *get* the aeropress(plunger, brew chamber, and filter cap), one aeropress filter, one coffee cup, one liquid measuring cup (one cup *minimum*), electric kettle with temperature control, kitchen scale, coffee (16 grams ground), and two cups of water (*minimum* for kettle), and one teaspoon, one timer.
 
 Put the aeropress filter in the filter cap and screw it clockwise on the brew chamber.
 
@@ -14,11 +14,48 @@ Place the aeropress on the scale, zero the scale, and weigh out 16 grams of coff
 
 Add water and *stop* if water exceeds top of brew chamber.  Place plunger inside of brew chamber and Set timer to two minutes
 
-
-
+---------------------------------------------------------
 
 
 START:
-IF coffee >= 16 grams AND water >= XX
 
-ELSE
+GET suppliesList
+
+Place (SHIFT) filter inside aeroFilter 
+
+//this means filter + aeroFilterCap
+
+Attach (PUSH) aeroFilter to brewChamber
+
+//now have an array called Aeropress
+
+Place 
+
+IF coffee >= 16 grams AND water >= 2 cups THEN
+
+GET array
+INIT brewCoffee
+
+ELSE IF coffee < 16 grams AND water >= 2 cups THEN
+
+// GET coffee from store
+
+ELSE 
+
+// GET water from store OR faucet
+
+CASE (if taste bad)
+
+FUNCTIONS**
+
+function brewCoffee 
+    Pass In 
+
+ARRAY
+
+suppliesList: aeropress, one aeropress filter, aeroFilterCap, one coffee cup, one liquid measuring cup, electric kettle with temperature control, kitchen scale, coffee (16 grams ground), and two cups of water, and one teaspoon, one timer
+
+SUBARRAY
+
+aeroPress = [plunger, brewChamber]
+aeroFilter = [aeroFilterCap]

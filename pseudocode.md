@@ -9,7 +9,7 @@ Pour *at least* 0.6 liters of water in the electric pitcher but *no more* than 1
 
 Place the aeropress on the scale, zero the scale, and weigh out 16 grams of coffee beans directly into the brew chamber, *if* I weigh too much, I put them back in the bag of coffee *else if* I weigh too little, I add more coffee to the scale, *else* I proceed to the next step.
 
-Add water and *stop* if water exceeds top of brew chamber.  Place plunger inside of brew chamber and Set timer to two minutes
+Add water and *stop* if water exceeds top of brew chamber.  Stir the coffee for about 10 seconds and then press down on the plunger until coffee no additional liquid comes out.
 
 ---
 
@@ -159,7 +159,9 @@ IF coffee >= 16 grams AND water >= 0.6 liters THEN
 
         INSERT aeroPlunger rubber cup facing down, inside of aeroPress
 
-        PRESS aeroPlunger down gently for 30 seconds    
+        WHILE aeroPress contains liquid
+            PRESS aeroPlunger down gently
+        ENDWHILE
     END FUNCTION 
 
     REMOVE aeroPress from coffeeCup

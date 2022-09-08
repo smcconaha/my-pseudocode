@@ -22,78 +22,78 @@ Add water and *stop* if water exceeds top of brew chamber.  Place plunger inside
 
 
 ## Use Case: 
-< As a coffee drinker, I want to make a quality cup of hot coffee.
+As a coffee drinker, I want to make a quality cup of hot coffee.
 ---
 
 ## INIT: Coffee Brewing Variables
 
-1. aeropress(brew chamber) = ##aeroPress##
-    - #Array# initially containing brew chamber
+1. aeropress(brew chamber) = **aeroPress**
+    - **Array** initially containing brew chamber
     - Hollow gray cylinder
     - Has gold numbers from 1 (octagonal base) to 4 (top) used for coffee and water dosing
     - Filter cap with filter attach to this component
     - Contains the coffee and water during brewing process
     - Plunger is inserted when brewing is completed, this action forces coffee out
-2. Plunger = ##aeroPlunger##
+2. Plunger = **aeroPlunger**
     - Gray cylinder with a black, rubber cup at the end
     - Inserted into the brew chamber through the end opposite of the octagonal end
         -Inserted rubber cup side down
     - Used to force the brewed coffee through the filter and into the cup
-3. Aeropress filter cap = ##aeroFilterCap##
+3. Aeropress filter cap = **aeroFilterCap**
     - #Array# initially containing filter cap
     - Houses the filter and attaches to the octagonal end of the brew chamber
     - Prevents coffee grounds from passing through to the cup
-4. Aeropress filter = ##filter##
+4. Aeropress filter = **filter**
     - Small, white, paper disc used to filter out grounds
     - Placed inside of the filter and screwed into the brew chamber
-5. Coffee cup = ##coffeeCup##
+5. Coffee cup = **coffeeCup**
     - Instrument used to hold final coffee product
-    Properties
+    - *Properties*
         - minCapacity = 8 oz
-6. Liquid measuring cup = ##measureCup##
+6. Liquid measuring cup = **measureCup**
     - Instrument used to measure water and fill the kettle
-    Properties
+    - *Properties*
         - minCapacity = 8 oz
-7. Kettle = ##electricKettle##
+7. Kettle = **electricKettle**
     - Appliance used to heat water
     - Has a control panel
     - Has a display
-    - Properties
+    - *Properties*
         - powerSource = electric
         - minCapacity = 0.6 liter
         - maxCapacity = 1.6 liter
-8. Kettle Control Panel = ##kettleControlPanel##
+8. Kettle Control Panel = **kettleControlPanel**
     - Contains two buttons, a "+temp" (increment) and a "-temp" (decrement) button used adjust water temperature
-9. Kettle Display = ##kettleDisplay##
+9. Kettle Display = **kettleDisplay**
     - An electronic display that shows desired temperature and if water is at desired temperature (preheated)
-10. Kitchen scale = ##scale##
+10. Kitchen scale = **scale**
     - Small scale used to measure ingredient weights
     - Has a control panel
     - Has a display
-11. Scale Control Panel = ##scaleControlPanel##
+11. Scale Control Panel = **scaleControlPanel**
 - Contains two buttons, a zeroize (exclude) weight of item currently on scale and a button that toggles between grams and ounces
-12. Scale Display = ##scaleDisplay##
+12. Scale Display = **scaleDisplay**
     - An electronic display that shows desired temperature and if water is at desired temperature (preheated)
-    Properties
+    - *Properties*
         - powerSource = battery
-13. Coffee = ##coffee##
+13. Coffee = **coffee**
     - Coffee beans in a bag that were bought from a grocery store
-    Properties
+    - *Properties*
         - grind type = preGround
-14. Water = ##water##
+14. Water = **water**
     - Water in liquid state
-    Properties
+    - *Properties*
         - source = tap
         - temperature = ''
-15. Teaspoon = ##teaspoon##
+15. Teaspoon = **teaspoon**
     - Utensil used to sture the coffee during brew process
-16. Timer = ##timer##
+16. Timer = **timer**
     - Item used to track time lapse during brew process
 17. Electric Outlet = electOutlet
     - Power source for electric kettle
 
 ---
-START:
+''START:
 
 GET Coffee Brewing Variables
 
@@ -106,7 +106,7 @@ IF coffee >= 16 grams AND water >= 0.6 liters THEN
         FUNCTION addWater
             GET measureCup
             
-            PRECONDITION: water is < measureCup.capacity AND water is < electricKettle.capacity
+            PRECONDITION: water is < measureCup.maxcapacity AND water is < electricKettle.maxcapacity
             WHILE water is < electricKettle.minCapacity
                 INCREMENT water
             ENDWHILE    
@@ -174,4 +174,5 @@ ELSE
 
     GET water from grocery store OR borrow water from your neighbor
 ENDIF
-//END PROGRAM
+'//END PROGRAM
+''

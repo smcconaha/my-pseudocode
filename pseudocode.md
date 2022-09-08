@@ -23,6 +23,7 @@ Add water and *stop* if water exceeds top of brew chamber.  Stir the coffee for 
 
 ## Use Case: 
 As a coffee drinker, I want to make a quality cup of hot coffee.
+
 ---
 
 ## INIT: Coffee Brewing Variables
@@ -93,7 +94,7 @@ As a coffee drinker, I want to make a quality cup of hot coffee.
     - Power source for electric kettle
 
 ---
-''START:
+START:
 
 GET Coffee Brewing Variables
 
@@ -172,9 +173,10 @@ IF coffee >= 16 grams AND water >= 0.6 liters THEN
 ELSE IF coffee < 16 grams AND water >= 2 cups THEN
 
     GET coffee from grocery store OR GET coffee from local coffee shop
-ELSE 
+ELSE
 
     GET water from grocery store OR borrow water from your neighbor
 ENDIF
-'//END PROGRAM
-''
+
+//END PROGRAM
+

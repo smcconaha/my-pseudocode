@@ -8,7 +8,7 @@ I *get* the aeropress(plunger, brew chamber, and filter cap), one aeropress filt
 
 Put the aeropress filter in the filter cap and screw it clockwise on the brew chamber.
 
-Pour *at least* two cups of water in the water pitcher but *no more* than 8 cups.  Press power *button* followed by temperature control *increment* button until the screen read 175 degrees *if* it reads higher then *decrement* down to 175 degrees.
+Pour *at least* 0.6 liters of water in the electric pitcher but *no more* than 1.7 liters.  Press power *button* followed by temperature control *increment* button until the screen reads 175 degrees *if* it reads higher then *decrement* down to 175 degrees.
 
 Place the aeropress on the scale, zero the scale, and weigh out 16 grams of coffee beans directly into the brew chamber, *if* I weigh too much, I put them back in the bag of coffee *else if* I weigh too little, I add more coffee to the scale, *else* I proceed to the next step.
 
@@ -21,9 +21,46 @@ START:
 
 GET suppliesList
 
-IF coffee >= 16 grams AND water >= 2 cups THEN
+IF coffee >= 16 grams AND water >= 0.6 liters THEN
 
-    INIT brewCoffee
+    function makeHotWater
+        pour water in electricKettle
+        
+        PRECONDITION: waterTempurature is < 175 degrees
+        WHILE kettleControlPanel READs < 175 degrees
+            INCREMENT kettleControlPanel tempurature by pressing temp+ button 
+        ENDWHILE
+
+        FOR each time you check the kettleControlPanel and it DOES NOT EQUAL "preheated"
+            wait one minute
+        ENDFOR
+
+        water = hotWater   
+    
+    END FUNCTION
+    
+    function measureCoffee
+        place aeroPress on scale
+        
+        zeroize scale
+        
+        PRECONDITION: scale shows that coffeeWeight is < 16 grams
+        WHILE coffeeWeight < 16 grams
+            INCREMENT coffeeWeight
+        ENDWHILE
+
+        
+        coffeeDose
+    ENDFUNCTION
+
+
+    function brewCoffee
+        PASS IN: coffeeDose
+        PASS IN: hotWater
+        
+        PASS OUT: brewedCoffee
+    END FUNCTION 
+
 
 ELSE IF coffee < 16 grams AND water >= 2 cups THEN
 
@@ -49,19 +86,17 @@ FUNCTION aeroAssembly
 
 END FUNCTION
 
-hotWater
-    PASS IN: water
-        FILL electricKettle to 
-        IF water is = 2 cups THEN
-        E
+makeHotWater
+    PASS IN: water to electricKettle
+    PASS OUT: water at 175 degrees
+END FUNCTION
 
 
-
-brewCoffee 
-    PASS IN: coffee
+function brewCoffee
+    PASS IN: coffeeDose
     PASS IN: hotWater
-    PASS OUT: 
-END FUNCTION  
+    PASS OUT: brewedCoffee
+END FUNCTION
 
 
 **FUNCTIONS**
@@ -86,7 +121,7 @@ END FUNCTION
 
 **ARRAY**
 
-suppliesList: aeroPress, aeropress filter, aeroFilterCap, aeroPlunger, coffee cup, liquid measuring cup, electric kettle with temperature control, kitchen scale, coffee (16 grams ground), water (0.6 L / minimum), teaspoon, and timer
+suppliesList: aeroPress, aeropress filter, aeroFilterCap, aeroPlunger, coffeeCup, liquid measuring cup, electricKettle, kettleControlPan, kitchen scale, coffee (16 grams ground), water (0.6 L / minimum), teaspoon, and timer
 
 **SUBARRAY**
 

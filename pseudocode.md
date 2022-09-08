@@ -5,7 +5,7 @@ I *get* the aeropress(plunger, brew chamber, and filter cap), one aeropress filt
 
 Put the aeropress filter in the filter cap and screw it clockwise on the brew chamber.
 
-Pour *at least* 0.6 liters of water in the electric pitcher but *no more* than 1.7 liters.  Press power *button* followed by temperature control *increment* button until the screen reads 175 degrees *if* it reads higher then *decrement* down to 175 degrees.
+Pour *at least* 0.6 liters of water in the electric pitcher but *no more* than 1.6 liters.  Press power *button* followed by temperature control *increment* button until the screen reads 175 degrees *if* it reads higher then *decrement* down to 175 degrees.
 
 Place the aeropress on the scale, zero the scale, and weigh out 16 grams of coffee beans directly into the brew chamber, *if* I weigh too much, I put them back in the bag of coffee *else if* I weigh too little, I add more coffee to the scale, *else* I proceed to the next step.
 

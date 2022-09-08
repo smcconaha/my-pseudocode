@@ -21,41 +21,74 @@ START:
 
 GET suppliesList
 
-Place (SHIFT) filter inside aeroFilter 
-
-//this means filter + aeroFilterCap
-
-Attach (PUSH) aeroFilter to brewChamber
-
-//now have an array called Aeropress
-
-Place 
-
 IF coffee >= 16 grams AND water >= 2 cups THEN
 
-GET array
-INIT brewCoffee
+    INIT brewCoffee
 
 ELSE IF coffee < 16 grams AND water >= 2 cups THEN
 
-// GET coffee from store
+    GET coffee from store
 
 ELSE 
 
-// GET water from store OR faucet
+    GET water from store OR faucet
+
+ENDIF
 
 CASE (if taste bad)
 
-FUNCTIONS**
+FUNCTION aeroAssembly
 
-function brewCoffee 
-    Pass In 
+    Place (SHIFT) filter inside aeroFilter 
 
-ARRAY
+    //this means filter + aeroFilterCap
 
-suppliesList: aeropress, one aeropress filter, aeroFilterCap, one coffee cup, one liquid measuring cup, electric kettle with temperature control, kitchen scale, coffee (16 grams ground), and two cups of water, and one teaspoon, one timer
+    Attach (PUSH) aeroFilter to aeroPress
 
-SUBARRAY
+    //now have an array called aeropress of [brewChamber with aeroFilter *subarray*]
 
-aeroPress = [plunger, brewChamber]
+END FUNCTION
+
+hotWater
+    PASS IN: water
+        FILL electricKettle to 
+        IF water is = 2 cups THEN
+        E
+
+
+
+brewCoffee 
+    PASS IN: coffee
+    PASS IN: hotWater
+    PASS OUT: 
+END FUNCTION  
+
+
+**FUNCTIONS**
+
+brewCoffee 
+    PASS IN: coffee
+    PASS IN: hotWater
+    PASS OUT: 
+END FUNCTION    
+
+aeroAssembly
+
+    Place (SHIFT) filter inside aeroFilter 
+
+    //this means filter + aeroFilterCap
+
+    Attach (PUSH) aeroFilter to aeroPress
+
+    //now have an array called aeropress of [brewChamber with aeroFilter *subarray*]
+END FUNCTION
+
+
+**ARRAY**
+
+suppliesList: aeroPress, aeropress filter, aeroFilterCap, aeroPlunger, coffee cup, liquid measuring cup, electric kettle with temperature control, kitchen scale, coffee (16 grams ground), water (0.6 L / minimum), teaspoon, and timer
+
+**SUBARRAY**
+
+aeroPress = [brewChamber]
 aeroFilter = [aeroFilterCap]

@@ -30,6 +30,7 @@ Add water and *stop* if water exceeds top of brew chamber.  Place plunger inside
 1. aeropress(brew chamber) = ##aeroPress##
     - #Array# initially containing brew chamber
     - Hollow gray cylinder
+    - Has gold numbers from 1 (octagonal base) to 4 (top) used for coffee and water dosing
     - Filter cap with filter attach to this component
     - Contains the coffee and water during brewing process
     - Plunger is inserted when brewing is completed, this action forces coffee out
@@ -39,148 +40,138 @@ Add water and *stop* if water exceeds top of brew chamber.  Place plunger inside
         -Inserted rubber cup side down
     - Used to force the brewed coffee through the filter and into the cup
 3. Aeropress filter cap = ##aeroFilterCap##
+    - #Array# initially containing filter cap
     - Houses the filter and attaches to the octagonal end of the brew chamber
     - Prevents coffee grounds from passing through to the cup
-2. Aeropress filter = ##filter##
+4. Aeropress filter = ##filter##
     - Small, white, paper disc used to filter out grounds
     - Placed inside of the filter and screwed into the brew chamber
-3. Coffee cup = ##coffeeCup##
+5. Coffee cup = ##coffeeCup##
     - Instrument used to hold final coffee product
-4. Liquid measuring cup = ##measureCup##
+    Properties
+        - minCapacity = 8 oz
+6. Liquid measuring cup = ##measureCup##
     - Instrument used to measure water and fill the kettle
-5. Kettle = ##electricKettle##
+    Properties
+        - minCapacity = 8 oz
+7. Kettle = ##electricKettle##
     - Appliance used to heat water
-    - Has a control panel used to select appropriate tempurature
-    - Has a display to show temperature selection and if water is preheated
+    - Has a control panel
+    - Has a display
     - Properties
-        - electric
+        - powerSource = electric
         - minCapacity = 0.6 liter
-        - 1maxCapcity = 1.6 liter
-6. Kitchen scale = ##scale##
+        - maxCapacity = 1.6 liter
+8. Kettle Control Panel = ##kettleControlPanel##
+    - Contains two buttons, a "+temp" (increment) and a "-temp" (decrement) button used adjust water temperature
+9. Kettle Display = ##kettleDisplay##
+    - An electronic display that shows desired temperature and if water is at desired temperature (preheated)
+10. Kitchen scale = ##scale##
     - Small scale used to measure ingredient weights
-    - Has a control panel used to zeroize (exclude) weight of item currently on scale
-    - Has a display to view item weight in grams
-7. Coffee = ##coffee##
+    - Has a control panel
+    - Has a display
+11. Scale Control Panel = ##scaleControlPanel##
+- Contains two buttons, a zeroize (exclude) weight of item currently on scale and a button that toggles between grams and ounces
+12. Scale Display = ##scaleDisplay##
+    - An electronic display that shows desired temperature and if water is at desired temperature (preheated)
+    Properties
+        - powerSource = battery
+13. Coffee = ##coffee##
     - Coffee beans in a bag that were bought from a grocery store
     Properties
-        - ground
-8. Water = ##water##
+        - grind type = preGround
+14. Water = ##water##
     - Water in liquid state
     Properties
-        - tap
-9. Teaspoon = ##teaspoon##
+        - source = tap
+        - temperature = ''
+15. Teaspoon = ##teaspoon##
     - Utensil used to sture the coffee during brew process
-10. Timer = ##timer##
+16. Timer = ##timer##
     - Item used to track time lapse during brew process
+17. Electric Outlet = electOutlet
+    - Power source for electric kettle
 
 ---
 START:
 
-GET suppliesList
+GET Coffee Brewing Variables
 
 IF coffee >= 16 grams AND water >= 0.6 liters THEN
 
-    function makeHotWater
-        pour water in electricKettle
+    FUNCTION makeHotWater
         
-        PRECONDITION: waterTempurature is < 175 degrees
-        WHILE kettleControlPanel READs < 175 degrees
-            INCREMENT kettleControlPanel tempurature by pressing temp+ button 
+        PLUG eletricKettle into electOutlet
+
+        FUNCTION addWater
+            GET measureCup
+            
+            PRECONDITION: water is < measureCup.capacity AND water is < electricKettle.capacity
+            WHILE water is < electricKettle.minCapacity
+                INCREMENT water
+            ENDWHILE    
+        
+        END FUNCTION     
+        
+        PRECONDITION: water.temperature is < 175 degrees
+        WHILE kettleDisplay READs < 175 degrees
+            INCREMENT kettleControlPanel temperature by pressing temp+ button 
         ENDWHILE
 
-        FOR each time you check the kettleControlPanel and it DOES NOT EQUAL "preheated"
+        FOR each time you check the kettleDisplay and it !== "preheated"
             wait one minute
-        ENDFOR
+        ENDFOR 
+    END FUNCTION
 
-        water = hotWater   
-    
+    FUNCTION aeroAssembly
+
+        PLACE filter inside aeroFilter (SHIFT)
+
+        ATTACH aeroFilter to aeroPress(PUSH)
+            WHILE aeroFilter is loose
+                turn clockwise
+            ENDWHILE   
     END FUNCTION
     
-    function measureCoffee
-        place aeroPress on scale
+    FUNCTION measureCoffee
         
-        zeroize scale
+        PLACE aeroPress on scale with aeroPress.aeroFilter facing down
         
-        PRECONDITION: scale shows that coffeeWeight is < 16 grams
-        WHILE coffeeWeight < 16 grams
-            INCREMENT coffeeWeight
-        ENDWHILE
+        PRESS zeroize on scaleControlPanel
 
-        
-        coffeeDose
+        IF scaleDisplay !== 0
+            press zeroize on scaleControlPanel
+        ELSE
+            WHILE scaleDisplay < 16 grams
+                INCREMENT coffee
+            ENDWHILE
+        ENDIF    
     ENDFUNCTION
 
-
-    function brewCoffee
-        PASS IN: coffeeDose
-        PASS IN: hotWater
+    FUNCTION brewCoffee
+        PLACE aeroPress on coffeeCup with aeropress.filter facing down
         
-        PASS OUT: brewedCoffee
+        WHILE aeropress water level !== 4
+            add hot water from electricKettle
+        ENDWHILE
+
+        STIR coffee AND water inside aeroPress with spoon for 10 seconds
+
+        INSERT aeroPlunger rubber cup facing down, inside of aeroPress
+
+        PRESS aeroPlunger down gently for 30 seconds    
     END FUNCTION 
 
+    REMOVE aeroPress from coffeeCup
 
+    WHILE coffeeCup !== empty
+        drink brown liquid
+    END WHILE   
 ELSE IF coffee < 16 grams AND water >= 2 cups THEN
 
-    GET coffee from store
-
+    GET coffee from grocery store OR GET coffee from local coffee shop
 ELSE 
 
-    GET water from store OR faucet
-
+    GET water from grocery store OR borrow water from your neighbor
 ENDIF
-
-CASE (if taste bad)
-
-FUNCTION aeroAssembly
-
-    Place (SHIFT) filter inside aeroFilter 
-
-    //this means filter + aeroFilterCap
-
-    Attach (PUSH) aeroFilter to aeroPress
-
-    //now have an array called aeropress of [brewChamber with aeroFilter *subarray*]
-
-END FUNCTION
-
-makeHotWater
-    PASS IN: water to electricKettle
-    PASS OUT: water at 175 degrees
-END FUNCTION
-
-
-function brewCoffee
-    PASS IN: coffeeDose
-    PASS IN: hotWater
-    PASS OUT: brewedCoffee
-END FUNCTION
-
-
-**FUNCTIONS**
-
-brewCoffee 
-    PASS IN: coffee
-    PASS IN: hotWater
-    PASS OUT: 
-END FUNCTION    
-
-aeroAssembly
-
-    Place (SHIFT) filter inside aeroFilter 
-
-    //this means filter + aeroFilterCap
-
-    Attach (PUSH) aeroFilter to aeroPress
-
-    //now have an array called aeropress of [brewChamber with aeroFilter *subarray*]
-END FUNCTION
-
-
-**VARIABLES**
-
-suppliesList: aeroPress, aeropress filter, aeroFilterCap, aeroPlunger, coffeeCup, liquid measuring cup, electricKettle, kettleControlPan, kitchen scale, coffee (16 grams ground), water (0.6 L / minimum), teaspoon, and timer
-
-**ARRAY**
-
-aeroPress = [brewChamber]
-aeroFilter = [aeroFilterCap]
+//END PROGRAM

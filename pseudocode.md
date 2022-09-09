@@ -90,7 +90,7 @@ As a coffee drinker, I want to make a quality cup of hot coffee.
     - Utensil used to sture the coffee during brew process
 16. Timer = **timer**
     - Item used to track time lapse during brew process
-17. Electric Outlet = electOutlet
+17. Electric Outlet = **electOutlet**
     - Power source for electric kettle
 
 ---
@@ -102,7 +102,7 @@ IF coffee >= 16 grams AND water >= 0.6 liters THEN
 
     FUNCTION makeHotWater
         
-        PLUG eletricKettle into electOutlet
+        PLUG electricKettle into electOutlet
 
         FUNCTION addWater
             GET measureCup
@@ -111,7 +111,6 @@ IF coffee >= 16 grams AND water >= 0.6 liters THEN
             WHILE water is < electricKettle.minCapacity
                 INCREMENT water
             ENDWHILE    
-        
         END FUNCTION     
         
         PRECONDITION: water.temperature is < 175 degrees
@@ -119,7 +118,7 @@ IF coffee >= 16 grams AND water >= 0.6 liters THEN
             INCREMENT kettleControlPanel temperature by pressing temp+ button 
         ENDWHILE
 
-        FOR each time you check the kettleDisplay and it !== "preheated"
+        FOR each time you check the kettleDisplay and it DOES NOT EQUAL "preheated"
             wait one minute
         ENDFOR 
     END FUNCTION
@@ -128,7 +127,7 @@ IF coffee >= 16 grams AND water >= 0.6 liters THEN
 
         PLACE filter inside aeroFilter (SHIFT)
 
-        ATTACH aeroFilter to aeroPress(PUSH)
+        ATTACH aeroFilterCap to aeroPress octagonal side (PUSH)
             WHILE aeroFilter is loose
                 turn clockwise
             ENDWHILE   
@@ -136,23 +135,21 @@ IF coffee >= 16 grams AND water >= 0.6 liters THEN
     
     FUNCTION measureCoffee
         
-        PLACE aeroPress on scale with aeroPress.aeroFilter facing down
+        PLACE aeroPress on scale with aeroPress.aeroFilterCap facing down
         
-        PRESS zeroize on scaleControlPanel
-
-        IF scaleDisplay !== 0
+        WHILE scaleDisplay DOES NOT EQUAL 0
             press zeroize on scaleControlPanel
-        ELSE
-            WHILE scaleDisplay < 16 grams
-                INCREMENT coffee
-            ENDWHILE
-        ENDIF    
+        ENDWHILE
+            
+        WHILE scaleDisplay < 16 grams
+            INCREMENT coffee
+        ENDWHILE   
     ENDFUNCTION
 
     FUNCTION brewCoffee
-        PLACE aeroPress on coffeeCup with aeropress.filter facing down
+        PLACE aeroPress on coffeeCup with aeropress.filterCap facing down
         
-        WHILE aeropress water level !== 4
+        WHILE aeropress water level DOES NOT EQUAL 4
             add hot water from electricKettle
         ENDWHILE
 
@@ -167,16 +164,17 @@ IF coffee >= 16 grams AND water >= 0.6 liters THEN
 
     REMOVE aeroPress from coffeeCup
 
-    WHILE coffeeCup !== empty
+    WHILE coffeeCup DOES NOT EQUAL empty
         drink brown liquid
     END WHILE   
 ELSE IF coffee < 16 grams AND water >= 2 cups THEN
 
     GET coffee from grocery store OR GET coffee from local coffee shop
-ELSE
+ELSE IF coffee > 16 grams AND water < 2 cups THEN
 
-    GET water from grocery store OR borrow water from your neighbor
+    GET water from grocery store
+ELSE 
+    GET water AND coffee from grocery store
 ENDIF
 
 //END PROGRAM
-

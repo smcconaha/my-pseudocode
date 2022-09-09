@@ -28,25 +28,35 @@ As a coffee drinker, I want to make a quality cup of hot coffee.
 
 ## INIT: Coffee Brewing Variables
 
-1. aeropress(brew chamber) = **aeroPress**
-    - **Array** initially containing brew chamber
-    - Hollow gray cylinder
-    - Has gold numbers from 1 (octagonal base) to 4 (top) used for coffee and water dosing
-    - Filter cap with filter attach to this component
-    - Contains the coffee and water during brewing process
-    - Plunger is inserted when brewing is completed, this action forces coffee out
-2. Plunger = **aeroPlunger**
-    - Gray cylinder with a black, rubber cup at the end
-    - Inserted into the brew chamber through the end opposite of the octagonal end
-        -Inserted rubber cup side down
-    - Used to force the brewed coffee through the filter and into the cup
-3. Aeropress filter cap = **aeroFilterCap**
-    - **Array** initially containing filter cap
-    - Houses the filter and attaches to the octagonal end of the brew chamber
-    - Prevents coffee grounds from passing through to the cup
-4. Aeropress filter = **filter**
-    - Small, white, paper disc used to filter out grounds
-    - Placed inside of the filter and screwed into the brew chamber
+1. Aeropress = **aeroPress**
+    - Entire brewing system composed of the following objects
+        - Brew chamber = **brewChamber**
+            - Hollow gray cylinder
+            - Has gold numbers from ranging from 1 on the octagonal base to 4 on the round top that are used for coffee and water dosing
+            - Filter cap with filter attach to this component
+            - Contains the coffee and water during brewing process
+            - Plunger is inserted when brewing is completed, this action forces coffee out
+            - *Properties*
+                - endOne = octagonal
+                - endTwo = round
+                - brewLevelOne = 1
+                - brewLevelTwo = 2
+                - brewLevelThree = 3
+                - brewLevelFour = 4
+        - Plunger = **plunger**
+            - Gray cylinder with a black, rubber cup at the end
+            - Inserted into the brew chamber through the end opposite of the octagonal end
+            - Inserted rubber cup side down
+            - Used to force the brewed coffee through the filter and into the cup
+            - *Properties*
+                - endOne = rubberCup
+                - endTwo = round
+        - Aeropress filter cap = **filterCap**
+            - Houses the filter and attaches to the octagonal end of the brew chamber
+            - Prevents coffee grounds from passing through to the cup
+        - Aeropress filter = **filter**
+            - Small, white, paper disc used to filter out grounds
+            - Placed inside of the filter and screwed into the brew chamber
 5. Coffee cup = **coffeeCup**
     - Instrument used to hold final coffee product
     - *Properties*
@@ -125,9 +135,9 @@ IF coffee >= 16 grams AND water >= 0.6 liters THEN
 
     FUNCTION aeroAssembly
 
-        PLACE filter inside aeroFilter (SHIFT)
+        PLACE aeroPress.filter inside aeroPress.filterCap
 
-        ATTACH aeroFilterCap to aeroPress octagonal side (PUSH)
+        ATTACH aeroPress.filterCap to aeroPress.brewChamber octagonal side (endOne)
             WHILE aeroFilter is loose
                 turn clockwise
             ENDWHILE   
@@ -135,7 +145,7 @@ IF coffee >= 16 grams AND water >= 0.6 liters THEN
     
     FUNCTION measureCoffee
         
-        PLACE aeroPress on scale with aeroPress.aeroFilterCap facing down
+        PLACE aeroPress on scale with aeroPress.aerofilterCap facing down AND aeroPress.brewChamber octagonal end (endOne) facing up
         
         WHILE scaleDisplay DOES NOT EQUAL 0
             press zeroize on scaleControlPanel
@@ -147,18 +157,18 @@ IF coffee >= 16 grams AND water >= 0.6 liters THEN
     ENDFUNCTION
 
     FUNCTION brewCoffee
-        PLACE aeroPress on coffeeCup with aeropress.filterCap facing down
+        PLACE aeroPress on coffeeCup with aeroPress.filterCap facing down AND aeroPress.brewChamber octagonal end (endOne) facing up
         
-        WHILE aeropress water level DOES NOT EQUAL 4
+        WHILE aeropress.brewChamber water level DOES NOT EQUAL brewLevelFour
             add hot water from electricKettle
         ENDWHILE
 
-        STIR coffee AND water inside aeroPress with spoon for 10 seconds
+        STIR coffee AND water inside aeroPress.brewChamber with spoon for 10 seconds
 
-        INSERT aeroPlunger rubber cup facing down, inside of aeroPress
+        INSERT aeroPress.plunger with rubber cup facing down (endOne), inside of aeroPress
 
         WHILE aeroPress contains liquid
-            PRESS aeroPlunger down gently
+            PRESS aeroPress.plunger round end (endTwo) down gently
         ENDWHILE
     END FUNCTION 
 
@@ -169,13 +179,13 @@ IF coffee >= 16 grams AND water >= 0.6 liters THEN
     END WHILE   
 ELSE IF coffee < 16 grams AND water >= 2 cups THEN
 
-    GET coffee from grocery store OR GET coffee from local coffee shop
+    GET coffee from grocery store OR GET coffee from local coffee shop AND restart
 ELSE IF coffee > 16 grams AND water < 2 cups THEN
 
-    GET water from grocery store
+    GET water from grocery store AND restart
 ELSE 
     
-    GET water AND coffee from grocery store
+    GET water AND coffee from grocery store AND restart
 ENDIF
 
 //END PROGRAM

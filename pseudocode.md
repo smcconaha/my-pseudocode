@@ -174,6 +174,7 @@ ELSE IF coffee > 16 grams AND water < 2 cups THEN
 
     GET water from grocery store
 ELSE 
+    
     GET water AND coffee from grocery store
 ENDIF
 

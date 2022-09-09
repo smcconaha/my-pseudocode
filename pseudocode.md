@@ -41,7 +41,7 @@ As a coffee drinker, I want to make a quality cup of hot coffee.
         -Inserted rubber cup side down
     - Used to force the brewed coffee through the filter and into the cup
 3. Aeropress filter cap = **aeroFilterCap**
-    - #Array# initially containing filter cap
+    - **Array** initially containing filter cap
     - Houses the filter and attaches to the octagonal end of the brew chamber
     - Prevents coffee grounds from passing through to the cup
 4. Aeropress filter = **filter**
